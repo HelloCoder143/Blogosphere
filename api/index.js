@@ -22,16 +22,16 @@ app.use('/uploads', express.static(__dirname + '/uploads'));
 
 mongoose.connect('mongodb+srv://irenemariasibi:g_VDVmXbWCKuV26@cluster0.oe5xq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
 
-function authenticateToken(req, res, next) {
-    const token = req.cookies.token;
-    if (!token) return res.status(401).send('Unauthorized');
+// function authenticateToken(req, res, next) {
+//     const token = req.cookies.token;
+//     if (!token) return res.status(401).send('Unauthorized');
   
-    jwt.verify(token, secret, (err, user) => {
-      if (err) return res.status(403).send('Forbidden');
-      req.user = user; // Attach user info to request
-      next();
-    });
-  }
+//     jwt.verify(token, secret, (err, user) => {
+//       if (err) return res.status(403).send('Forbidden');
+//       req.user = user; // Attach user info to request
+//       next();
+//     });
+//   }
   
 
 app.post('/register', async (req,res) => {
@@ -48,16 +48,21 @@ app.post('/register', async (req,res) => {
     }
   });
   
-  app.post('/login', async (req,res) => {
-    const {username,password} = req.body;
+  app.post('/login', async (req, res) => {
+    const {username, password} = req.body;
     const userDoc = await User.findOne({username});
+    
+    if (!userDoc) {
+      return res.status(400).json('User not found');
+    }
+  
     const passOk = bcrypt.compareSync(password, userDoc.password);
     if (passOk) {
       // logged in
-      jwt.sign({username,id:userDoc._id}, secret, {}, (err,token) => {
+      jwt.sign({username, id:userDoc._id}, secret, {}, (err, token) => {
         if (err) throw err;
         res.cookie('token', token).json({
-          id:userDoc._id,
+          id: userDoc._id,
           username,
         });
       });
@@ -65,6 +70,7 @@ app.post('/register', async (req,res) => {
       res.status(400).json('wrong credentials');
     }
   });
+  
   
   app.get('/profile', (req,res) => {
     const {token} = req.cookies;
@@ -135,15 +141,14 @@ app.post('/register', async (req,res) => {
   });
   
   
-  app.get('/post', authenticateToken, async (req, res) => {
-  const { id: userId } = req.user; // Extract the user Id from authentication middleware
-  try {
-    const posts = await Post.find({ author: userId }).populate('author', ['username']).sort({ createdAt: -1 });
-    res.json(posts);
-  } catch (err) {
-    res.status(500).json({ message: 'Error fetching posts' });
-  }
-});
+  app.get('/post', async (req,res) => {
+    res.json(
+      await Post.find()
+        .populate('author', ['username'])
+        .sort({createdAt: -1})
+        .limit(20)
+    );
+  });
   
   app.get('/post/:id', async (req, res) => {
     const {id} = req.params;
