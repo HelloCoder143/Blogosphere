@@ -52,7 +52,7 @@ const HomePage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    fetch('https://blogosphere-five.vercel.app/profile', {
+    fetch('http://localhost:4000/profile', {
       credentials: 'include',
     })
       .then(response => {
@@ -69,11 +69,11 @@ const HomePage = () => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      axios.get('https://blogosphere-five.vercel.app/public-posts')
+      axios.get('http://localhost:4000/public-posts')
         .then(response => setPosts(response.data))
         .catch(error => console.error('Error fetching public posts:', error));
     } else {
-      axios.get('https://blogosphere-five.vercel.app/post')
+      axios.get('http://localhost:4000/post')
         .then(response => setPosts(response.data))
         .catch(error => console.error('Error fetching user posts:', error));
     }

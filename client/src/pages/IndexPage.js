@@ -8,7 +8,7 @@ export default function IndexPage() {
 
   useEffect(() => {
     if (userInfo) {
-      fetch('https://blogosphere-five.vercel.app/post', {
+      fetch('http://localhost:4000/post', {
         credentials: 'include',
       })
         .then(response => response.json())
