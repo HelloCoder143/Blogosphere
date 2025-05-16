@@ -48,9 +48,9 @@ div.post{
 }
 
 div.post img {
-  width: 100%; /* Make the image take the full width of its column */
+  width: 80%; /* Make the image take the full width of its column */
   object-fit: cover; /* Ensure the image maintains its aspect ratio */
-  height: 500px; /* Set a fixed height for the images */
+  height: 410px; /* Set a fixed height for the images */
 }
 
 div.post div.texts {

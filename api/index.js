@@ -11,16 +11,17 @@ const multer = require('multer');
 const uploadMiddleware = multer({dest: 'uploads/'});
 const fs = require('fs');
 const { dirname } = require('path');
-
-const salt = bcrypt.genSaltSync(10);
-const secret = 'fdst464576576dtdtsae';
+require('dotenv').config(); 
+const salt = bcrypt.genSaltSync(parseInt(process.env.SALT_ROUNDS));
+const secret = process.env.JWT_SECRET;
 
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
-mongoose.connect('mongodb+srv://irenemariasibi:g_VDVmXbWCKuV26@cluster0.oe5xq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
+// mongoose.connect('mongodb+srv://irenemariasibi:g_VDVmXbWCKuV26@cluster0.oe5xq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
+mongoose.connect(process.env.MONGODB_URI);
 
 // function authenticateToken(req, res, next) {
 //     const token = req.cookies.token;
@@ -167,7 +168,6 @@ app.post('/register', async (req,res) => {
 
   
   app.listen(4000);
-  //
+
 
 //g_VDVmXbWCKuV26
-
