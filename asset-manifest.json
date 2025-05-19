@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Blogosphere/static/css/main.00c0c1b7.css",
-    "main.js": "/Blogosphere/static/js/main.9d6978b8.js",
+    "main.js": "/Blogosphere/static/js/main.cdd88428.js",
     "static/js/453.258b012d.chunk.js": "/Blogosphere/static/js/453.258b012d.chunk.js",
     "index.html": "/Blogosphere/index.html",
     "main.00c0c1b7.css.map": "/Blogosphere/static/css/main.00c0c1b7.css.map",
-    "main.9d6978b8.js.map": "/Blogosphere/static/js/main.9d6978b8.js.map",
+    "main.cdd88428.js.map": "/Blogosphere/static/js/main.cdd88428.js.map",
     "453.258b012d.chunk.js.map": "/Blogosphere/static/js/453.258b012d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.00c0c1b7.css",
-    "static/js/main.9d6978b8.js"
+    "static/js/main.cdd88428.js"
   ]
 }
