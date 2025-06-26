@@ -21,7 +21,11 @@ app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
 // mongoose.connect('mongodb+srv://irenemariasibi:g_VDVmXbWCKuV26@cluster0.oe5xq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
-mongoose.connect(process.env.MONGODB_URI);
+// mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect(process.env.MONGODB_URI, {
+  tls: true,
+  tlsAllowInvalidCertificates: false, // Set to 'true' if still failing
+});
 
 // function authenticateToken(req, res, next) {
 //     const token = req.cookies.token;
